@@ -7,6 +7,6 @@ RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENV ASPNETCORE_URLS=http://0.0.0.0:10000
+ENV DATABASE_URL=""
 EXPOSE 10000
-ENTRYPOINT ["dotnet", "wt-lab5-5razor-denisyuk.dll"]
+ENTRYPOINT ["dotnet", "wt-lab8-8razor-postgresql-denisyuk.dll"]

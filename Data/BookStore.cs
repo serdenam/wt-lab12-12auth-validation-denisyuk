@@ -1,6 +1,6 @@
-using wt_lab5_5razor_denisyuk.Models;
+using wt_lab8_8razor_postgresql_denisyuk.Models;
 
-namespace wt_lab5_5razor_denisyuk.Data;
+namespace wt_lab8_8razor_postgresql_denisyuk.Data;
 
 public static class BookStore
 {

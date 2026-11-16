@@ -1,0 +1,26 @@
+@page
+@model wt_lab8_8razor_postgresql_denisyuk.Pages.Books.DeleteModel
+
+@{
+    ViewData["Title"] = "Удалить книгу";
+}
+
+<h1>Удалить книгу</h1>
+
+<h3>Вы уверены, что хотите удалить эту книгу?</h3>
+<div>
+    <h4>@Model.Book.Title</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Автор</dt>
+        <dd class="col-sm-10">@Model.Book.Author</dd>
+        <dt class="col-sm-2">Год</dt>
+        <dd class="col-sm-10">@Model.Book.Year</dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Book.Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-page="./Index" class="btn btn-secondary">Назад к списку</a>
+    </form>
+</div>

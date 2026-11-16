@@ -1,33 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using wt_lab5_5razor_denisyuk.Models;
-using wt_lab5_5razor_denisyuk.Data;
+using wt_lab8_8razor_postgresql_denisyuk.Data;
+using wt_lab8_8razor_postgresql_denisyuk.Models;
 
-namespace wt_lab5_5razor_denisyuk.Pages.Books;
+namespace wt_lab8_8razor_postgresql_denisyuk.Pages.Books;
 
 public class CreateModel : PageModel
 {
+    private readonly AppDbContext _context;
+
+    public CreateModel(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    // ВАЖНО: Свойство теперь называется NewBook (как в твоем HTML)
     [BindProperty]
     public Book NewBook { get; set; } = new();
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
+        return Page();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
-        
-        // Если есть ошибки валидации - возвращаем ту же страницу с ошибками
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        NewBook.Id = BookStore.Books.Any() 
-            ? BookStore.Books.Max(b => b.Id) + 1 
-            : 1;
-
-        BookStore.Books.Add(NewBook);
+        _context.Books.Add(NewBook);           // Добавляем NewBook
+        await _context.SaveChangesAsync();     // Сохраняем в базу
 
         return RedirectToPage("./Index");
     }

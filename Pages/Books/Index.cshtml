@@ -1,5 +1,5 @@
 @page
-@model wt_lab5_5razor_denisyuk.Pages.Books.IndexModel
+@model wt_lab8_8razor_postgresql_denisyuk.Pages.Books.IndexModel
 @{
     ViewData["Title"] = "Каталог книг";
 }
@@ -19,13 +19,19 @@
 </style>
 
 <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+       <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
         <div>
             <h1 class="fw-bold text-dark">Наша Библиотека</h1>
             <p class="text-secondary mb-0">Всего книг в фонде: <span class="fw-bold">@Model.Books.Count</span></p>
         </div>
         <a asp-page="/Books/Create" class="btn btn-success rounded-pill px-4 shadow-sm">+ Добавить книгу</a>
     </div>
+
+    <!-- Форма поиска -->
+    <form method="get" class="mb-4 d-flex gap-2" style="max-width: 500px;">
+        <input type="text" name="Search" value="@Model.Search" class="form-control rounded-pill" placeholder="Поиск книги по названию..." />
+        <button type="submit" class="btn btn-primary rounded-pill px-4">Найти</button>
+    </form>
 
     <div class="row g-4">
         @foreach (var book in Model.Books)
@@ -59,12 +65,11 @@
                         <div class="mt-auto pt-3 border-top">
                             <a asp-page="/Books/Details" asp-route-id="@book.Id" class="btn btn-outline-primary w-100 fw-bold rounded-pill mb-2">Подробнее о книге</a>
                             
-                            <!-- Форма для удаления -->
-                            <form method="post" asp-page-handler="Delete" asp-route-id="@book.Id" class="d-grid">
-                                <button type="submit" class="btn btn-outline-danger rounded-pill" onclick="return confirm('Вы уверены, что хотите удалить эту книгу?');">
-                                    Удалить
-                                </button>
-                            </form>
+                            <!-- Кнопка редактирования -->
+                            <a asp-page="./Edit" asp-route-id="@book.Id" class="btn btn-outline-secondary w-100 fw-bold rounded-pill mb-2">Редактировать</a>
+                            
+                            <!-- Кнопка удаления (ведет на отдельную страницу) -->
+                            <a asp-page="./Delete" asp-route-id="@book.Id" class="btn btn-outline-danger w-100 rounded-pill">Удалить</a>
                         </div>
                     </div>
                 </div>
