@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace wt_lab8_8razor_postgresql_denisyuk.Migrations
+namespace wt_lab12_12auth_validation_denisyuk.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

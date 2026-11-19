@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using wt_lab8_8razor_postgresql_denisyuk.Models;
-using wt_lab8_8razor_postgresql_denisyuk.Data;
+using wt_lab12_12auth_validation_denisyuk.Models;
+using wt_lab12_12auth_validation_denisyuk.Data;
 
-namespace wt_lab8_8razor_postgresql_denisyuk.Pages.Books;
+namespace wt_lab12_12auth_validation_denisyuk.Pages.Books;
 
 public class DetailsModel : PageModel
 {

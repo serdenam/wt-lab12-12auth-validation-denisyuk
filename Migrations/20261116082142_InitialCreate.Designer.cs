@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using wt_lab8_8razor_postgresql_denisyuk.Data;
+using wt_lab12_12auth_validation_denisyuk.Data;
 
 #nullable disable
 
-namespace wt_lab8_8razor_postgresql_denisyuk.Migrations
+namespace wt_lab12_12auth_validation_denisyuk.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20261116082142_InitialCreate")]
@@ -24,7 +24,7 @@ namespace wt_lab8_8razor_postgresql_denisyuk.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("wt_lab8_8razor_postgresql_denisyuk.Models.Book", b =>
+            modelBuilder.Entity("wt_lab12_12auth_validation_denisyuk.Models.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

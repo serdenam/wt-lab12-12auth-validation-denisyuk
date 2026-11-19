@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using wt_lab8_8razor_postgresql_denisyuk.Data;
+using wt_lab12_12auth_validation_denisyuk.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +16,6 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
     {
         var uri = new Uri(databaseUrl);
         var userInfo = uri.UserInfo.Split(':', 2);
-        
-        // Если порт не указан, используем стандартный 5432
         int dbPort = uri.Port > 0 ? uri.Port : 5432;
 
         var dbBuilder = new NpgsqlConnectionStringBuilder
@@ -27,7 +25,7 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
             Database = uri.AbsolutePath.TrimStart('/'),
             Username = Uri.UnescapeDataString(userInfo[0]),
             Password = Uri.UnescapeDataString(userInfo[1]),
-            SslMode = SslMode.Disable // Важно для внутренней сети Render
+            SslMode = SslMode.Disable
         };
         connectionString = dbBuilder.ConnectionString;
     }
@@ -37,24 +35,24 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
     }
 }
 
-// Регистрируем сервисы
+// СТРАХОВКА: Если строка подключения всё ещё пуста (локальный запуск), берем её напрямую
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    connectionString = "Host=localhost;Port=5432;Database=wt_lab12;Username=postgres;Password=dashaden22"; // <-- Убедись, что пароль верный!
+}
+
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddSession();
 
 var app = builder.Build();
 
-// ==========================================
-// 2. Автоматическое применение миграций при запуске
-// ==========================================
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
 }
 
-// ==========================================
-// 3. Настройка HTTP pipeline (Middleware)
-// ==========================================
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -62,15 +60,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
 app.UseAuthorization();
-
 app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
+app.MapRazorPages().WithStaticAssets();
 
-// ==========================================
-// 4. Запуск приложения на порту Render
-// ==========================================
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
 app.Run($"http://0.0.0.0:{port}");
