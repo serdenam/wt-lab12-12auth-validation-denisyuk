@@ -9,4 +9,4 @@ WORKDIR /app
 COPY --from=build /app/publish .
 ENV DATABASE_URL=""
 EXPOSE 10000
-ENTRYPOINT ["dotnet", "wt-lab8-8razor-postgresql-denisyuk.dll"]
+ENTRYPOINT ["dotnet", "wt-lab12-12auth-validation-denisyuk.dll"]
